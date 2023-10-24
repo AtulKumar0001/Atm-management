@@ -14,7 +14,7 @@ from email.mime.multipart import MIMEMultipart
 
 
 # Connect to MongoDB Atlas. please replace this with your own
-client = pymongo.MongoClient("mongodb+srv://atulkumar86281:Passwordatlas1@cluster0.du9k7ti.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("Replace with your own string")
 # Database name
 db = client["Atm_management"]
 
@@ -45,8 +45,8 @@ LOCK_DURATION_SECONDS = 600  # 10 minutes
 #Function for Sending emails
 
 def send_email(subject, message, to_email):
-    from_email = "atul81595@gmail.com"
-    app_password = "bcjm azmj hssv doit"  # generate from app password option in two step verification
+    from_email = "Enter your own gmail"
+    app_password = "Demo:- abcd efgh jklm nopq"  # generate from app password option in two step verification
 
     msg = MIMEMultipart()
     msg['From'] = from_email 
