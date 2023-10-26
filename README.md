@@ -1,6 +1,6 @@
 # Atm-management
 
-
+User cannot be created before Admin
 A minimum of five user registrations is allowed.
 Deposit limit: $100,000.
 Withdrawal limit: $50,000.
