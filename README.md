@@ -1,8 +1,8 @@
 # Atm-management
 #Important:
-Add Your connection string
-Add your gmail 
-Add your gmail password (Google account setting) > Security > (Make sure 2-step verification is on.) > App passwords
+Add Your connection string.
+Add your gmail.
+Add your gmail password (Google account setting) > Security > (Make sure 2-step verification is on.) > App passwords.
 
 A user cannot be created before Admin
 A minimum of five user registrations is allowed.
