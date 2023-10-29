@@ -1,6 +1,10 @@
 # Atm-management
+#Important:
+Add Your connection string
+Add your gmail 
+Add your gmail password (Google account setting) > Security > (Make sure 2-step verification is on.) > App passwords
 
-User cannot be created before Admin
+A user cannot be created before Admin
 A minimum of five user registrations is allowed.
 Deposit limit: $100,000.
 Withdrawal limit: $50,000.
