@@ -74,7 +74,7 @@ def get_user_input_with_timeout(prompt, timeout):
 
 def send_email(subject, message, to_email):
     from_email = "your gmail"
-    app_password = "Demo: bcjm azmj hisv abcd"  # generate from app password option in two step verification
+    app_password = "Demo: bcbm azmj hisv abcd"  # generate from app password option in two step verification
 
     msg = MIMEMultipart()
     msg['From'] = from_email 
