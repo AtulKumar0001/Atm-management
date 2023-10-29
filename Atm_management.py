@@ -18,7 +18,7 @@ import threading
 
 
 # Connect to MongoDB Atlas. please replace this with your own
-client = pymongo.MongoClient("Your Connection String")
+client = pymongo.MongoClient("mongodb+srv://atulkumar86281:Passwordatlas1@cluster0.du9k7ti.mongodb.net/?retryWrites=true&w=majority")
 # Database name
 db = client["Atm_management"]
 
@@ -73,8 +73,8 @@ def get_user_input_with_timeout(prompt, timeout):
 #Function for Sending emails
 
 def send_email(subject, message, to_email):
-    from_email = "Your gmail"
-    app_password = "Demo: bcjm azaj hbsv diit"  # generate from app password option in two step verification
+    from_email = "atul81595@gmail.com"
+    app_password = "bcjm azmj hssv doit"  # generate from app password option in two step verification
 
     msg = MIMEMultipart()
     msg['From'] = from_email 
@@ -147,7 +147,7 @@ def Userlogin():
             if password == stored_password:
                 print("  ______________________________________________________________")
                 print(" |                                                              |")
-                print(f" |         Login successful. Welcome,  {user['name']}                      |")
+                print(f" |         Login successful. Welcome,  {user['name']}                     |")
                 print(" |                                                              |")
                 print("  --------------------------------------------------------------")
                 sleep(2)
@@ -220,18 +220,28 @@ def Userlogin():
                         withdraw = int(input("Enter: "))
 
                         if withdraw <= 50000:
-                            user_collection.update_one({"user_id": user_id}, {"$inc": {"balance":-withdraw}})
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 MONEY WITHDRAWN SUCCESSFULLY                 |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
-                            user = user_collection.find_one({"user_id": user_id})
-                            subject = "Money Debited"
-                            message = f"Your account is Debited by INR {withdraw}. ACC balance is {user['balance']} "
-                            to_email = user["gmail"]  # Replace with the user's email
-                            send_email(subject, message, to_email)
-                            sys.exit()
+                            available = user["balance"]
+                            if withdraw > available:
+                                print(" ______________________________________________________________")
+                                print("|                                                              |")
+                                print("|                       BALANCE IS LOW                         |")
+                                print("|                                                              |")
+                                print(" --------------------------------------------------------------")
+                                sleep(4)
+                                clear_screen()
+                            else:
+                                user_collection.update_one({"user_id": user_id}, {"$inc": {"balance":-withdraw}})
+                                print(" ______________________________________________________________")
+                                print("|                                                              |")
+                                print("|                 MONEY WITHDRAWN SUCCESSFULLY                 |")
+                                print("|                                                              |")
+                                print(" --------------------------------------------------------------")
+                                user = user_collection.find_one({"user_id": user_id})
+                                subject = "Money Debited"
+                                message = f"Your account is Debited by INR {withdraw}. ACC balance is {user['balance']} "
+                                to_email = user["gmail"]  # Replace with the user's email
+                                send_email(subject, message, to_email)
+                                sys.exit()
 
                         else:
                             print(" ______________________________________________________________")
@@ -239,7 +249,7 @@ def Userlogin():
                             print("|                 PLEASE ENTER WITHIN LIMIT                    |")
                             print("|                                                              |")
                             print(" --------------------------------------------------------------")
-                            break
+                            # break
 
                     elif choiceT == 3:
                         # clear_screen()
@@ -249,36 +259,59 @@ def Userlogin():
                         print("|                                                              |")
                         print("|                   SHOWING USER BALANCE                       |")
                         print("|                                                              |")
-                        print(f"|                 User_id = {user['user_id']}                            |")
+                        print(f"|                 User_id = {user['user_id']}                           |")
                         print("|                                                              |")
                         print(f"|                 Balance = {user['balance']}                                |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
                         input("Press enter to continue: ")
+                        # sleep(4)
                         clear_screen()
 
                     elif choiceT == 4:
-                        new_pass = None
-                        user_input_new = get_user_input_with_timeout(f"Please Enter your new password for {user['user_id']} : ", 30)
+                        oldPass = user["password"]
+                        enteredOldPass = None
+                        user_input_new = get_user_input_with_timeout(f"Please Enter your old password for {user['user_id']} : ", 30)
 
                         if user_input_new:
-                            new_pass = user_input_new
+                            enteredOldPass = user_input_new
 
-                        #old way
-                        # print(f"Enter the new Password for {user['user_id']}")
-                        # new_pass = input("Enter: ")
-                        clear_screen()
-                        user_collection.update_one({"user_id": user_id}, {"$set": {"password":new_pass}})
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
-                        subject = "Password Changed"
-                        message = f"Your account Password has been changed "
-                        to_email = user["gmail"]  # Replace with the user's email
-                        send_email(subject, message, to_email)
-                        sys.exit()
+                        if oldPass == enteredOldPass:
+
+                            new_pass = None
+                            user_input_new = get_user_input_with_timeout(f"Please Enter your new password for {user['user_id']} : ", 30)
+
+                            if user_input_new:
+                                new_pass = user_input_new
+
+                            #old way
+                            # print(f"Enter the new Password for {user['user_id']}")
+                            # new_pass = input("Enter: ")
+
+                            clear_screen()
+
+                            
+
+                            user_collection.update_one({"user_id": user_id}, {"$set": {"password":new_pass}})
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            subject = "Password Changed"
+                            message = f"Your account Password has been changed "
+                            to_email = user["gmail"]  # Replace with the user's email
+                            send_email(subject, message, to_email)
+                            sys.exit()
+
+                        else:
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|                 PASSWORD IS WRONG.TRY AGAIN.                 |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            sleep(4)
+                            clear_screen()
 
                     elif choiceT == 5:
                         print(" ______________________________________________________________")
@@ -286,6 +319,7 @@ def Userlogin():
                         print("|                    EXITING USER DASHBOARD                    |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
+                        sleep(4)
                         sys.exit()
 
                     else:
@@ -294,6 +328,7 @@ def Userlogin():
                         print("|                 PLEASE ENTER A VALID CHOICE                  |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
+                        sleep(2)
                 
             else:
                 
@@ -384,9 +419,9 @@ def adminLogin():
             stored_password = admin["password"]
 
             if password == stored_password:
-                print("  _____________________________________________________________")
+                print("  ______________________________________________________________")
                 print(" |                                                              |")
-                print(f" |         Login successful. Welcome,  {admin['name']}                     |")
+                print(f" |         Login successful. Welcome,  {admin['name']}               |")
                 print(" |                                                              |")
                 print("  --------------------------------------------------------------")
                 sleep(2)
@@ -406,7 +441,9 @@ def adminLogin():
                     print("|                                                  |")
                     print("|               4. CHANGE PASSWORD                 |")
                     print("|                                                  |")
-                    print("|               5. EXIT                            |")
+                    print("|               5. CHANGE USER PASSWORD            |")
+                    print("|                                                  |")
+                    print("|               6. EXIT                            |")
                     print("|                                                  |")
                     print("|             PLEASE CHOOSE YOUR OPTION            |")
                     print(" --------------------------------------------------")
@@ -414,9 +451,21 @@ def adminLogin():
                     clear_screen()
 
                     if choiceT == 1:
+                        if user_collection.count_documents({}) == 0:
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|              There is no user registered.                    |")
+                            print("|                                                              |")
+                            print("|              Please register any user and try again.         |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            sleep(4)
+                            clear_screen()
+                            continue
+                            # sys.exit()
                         print(" ______________________________________________________________")
                         print("|                                                              |")
-                        print("|      PLEASE ENTER THE ACC ID YOU WANT TO LOCK\\UNLOCK        |")
+                        print("|      PLEASE ENTER THE ACC ID YOU WANT TO LOCK\\UNLOCK         |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
                         acc = input("Enter: ")
@@ -444,8 +493,8 @@ def adminLogin():
                             # message = f"Your Admin account is credited by INR {amountD}. ACC balance is {admin['balance']} "
                             # to_email = admin["gmail"]  # Replace with the user's email
                             # send_email(subject, message, to_email)
-                            sys.exit()
-                            break
+                            # sys.exit()
+                            # break
 
                         elif user and option.upper() == 'U':
                             user_collection.update_one({"user_id": acc}, {"$set": {"account_locked":False,"lock_time":0}})
@@ -464,6 +513,19 @@ def adminLogin():
                             print(" --------------------------------------------------------------")
 
                     elif choiceT == 2:
+                        if user_collection.count_documents({}) == 0:
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|              There is no user registered.                    |")
+                            print("|                                                              |")
+                            print("|              Please register any user and try again.         |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            # sys.exit()
+                            sleep(4)
+                            clear_screen()
+                            continue
+
                         print("Are you sure you want to Delete?. You cannot Redo this Action!")
                         print(" ______________________________________________________________")
                         print("|                                                              |")
@@ -480,23 +542,35 @@ def adminLogin():
                         if result.deleted_count == 1:
                             print(" ______________________________________________________________")
                             print("|                                                              |")
-                            print(f"|  User with user ID {user_to_delete} has been deleted                   |")
+                            print(f"|  User with user ID {user_to_delete} has been deleted                 |")
                             print("|                                                              |")
                             print(" --------------------------------------------------------------")
-                            sleep(2)
+                            sleep(4)
                             clear_screen()
 
                         else:
                             print(" ______________________________________________________________")
                             print("|                                                              |")
-                            print(f"|     NO User found with user ID {user_to_delete}                           |")
+                            print(f"|     NO User found with user ID {user_to_delete}                            |")
                             print("|                                                              |")
                             print(" --------------------------------------------------------------")
-                            sleep(2)
+                            sleep(5)
                             clear_screen()
-                            break
+                            # break
 
                     elif choiceT == 3:
+                        if user_collection.count_documents({}) == 0:
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|              There is no user registered.                    |")
+                            print("|                                                              |")
+                            print("|              Please register any user and try again.         |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            # sys.exit()
+                            sleep(4)
+                            clear_screen()
+                            continue
                         # Perform an aggregation query to calculate the total balance
                         pipeline = [
                             {
@@ -521,7 +595,7 @@ def adminLogin():
                         print("|                                                              |")
                         print("|                   TOTAL USER BALANCE                         |")
                         print("|                                                              |")
-                        print(f"|                 Total Balance = {total_balance}                       |")
+                        print(f"|                 Total Balance = {total_balance}                          |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
                         input("Press enter to continue: ")
@@ -550,11 +624,65 @@ def adminLogin():
                         sys.exit()
 
                     elif choiceT == 5:
+                        
+                        user_id = None
+                        # password = None
+
+
+                        user_input1 = get_user_input_with_timeout("Please Enter your user_id: ", 30)
+                        if user_input1:
+                            user_id = user_input1
+
+                        # user_input2 = get_user_input_with_timeout("Please Enter your password: ", 30)
+                        # if user_input2:
+                        #     password = user_input2
+
+
+                        clear_screen()
+    
+                        # Search for the user by user_id
+                        user = user_collection.find_one({"user_id": user_id})
+                        if not user:
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|                 PLEASE ENTER CORRECT USER ID                 |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            sleep(3)
+                            clear_screen()
+                        else:
+                            new_pass = None
+                            user_input_new = get_user_input_with_timeout(f"Please Enter your new password for {user['user_id']} : ", 30)
+
+                            if user_input_new:
+                                new_pass = user_input_new
+
+                            #old way
+                            # print(f"Enter the new Password for {user['user_id']}")
+                            # new_pass = input("Enter: ")
+
+                            clear_screen()
+                            user_collection.update_one({"user_id": user_id}, {"$set": {"password":new_pass}})
+                            print(" ______________________________________________________________")
+                            print("|                                                              |")
+                            print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
+                            print("|                                                              |")
+                            print(" --------------------------------------------------------------")
+                            subject = "Password Changed"
+                            message = f"Your User account Password has been changed by the admin. For any query please contact to your admin"
+                            to_email = user["gmail"]  # Replace with the user's email
+                            send_email(subject, message, to_email)
+                            # sys.exit()
+                            sleep(4)
+                            clear_screen()
+
+                    elif choiceT == 6:
                         print(" ______________________________________________________________")
                         print("|                                                              |")
                         print("|                    EXITING ADMIN DASHBOARD                   |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
+                        sleep(4)
                         sys.exit()
 
                     else:
@@ -665,7 +793,7 @@ def userRegistration():
         }
         print("  ____________________________________________________________________________________________")
         print(" |                                                                                            |")
-        print(F" |  User created Successfully and the user id is {unique} .Please use this id to login         |")
+        print(F" |  User created Successfully and the user id is {unique} .Please use this id to login        |")
         print(" |                                                                                            |")
         print("  ---------------------------------------------------------------------------------------------")
         user_collection.insert_one(data)
@@ -762,6 +890,8 @@ def main():
     print("|                                                  |")
     print("|               2. ADMIN INTERFACE                 |")
     print("|                                                  |")
+    print("|               3. EXIT                            |")
+    print("|                                                  |")
     print("|             PLEASE CHOOSE YOUR OPTION            |")
     print(" --------------------------------------------------")
     mainChoice = int(input("Enter: "))
@@ -844,6 +974,13 @@ def main():
                     print("|                 PLEASE ENTER A VALID CHOICE                  |")
                     print("|                                                              |")
                     print(" --------------------------------------------------------------")
-
+    elif mainChoice == 3:
+        print(" ______________________________________________________________")
+        print("|                                                              |")
+        print("|                      EXITING DASHBOARD                       |")
+        print("|                                                              |")
+        print(" --------------------------------------------------------------")
+        sleep(4)
+        sys.exit()
 if __name__ == "__main__":
     main()
