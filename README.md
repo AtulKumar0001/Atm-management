@@ -1,6 +1,9 @@
 # Atm-management
+
 #Important:
-Add Your connection string.
+
+
+Add your connection string.
 Add your gmail.
 Add your gmail password (Google account setting) > Security > (Make sure 2-step verification is on.) > App passwords.
 
