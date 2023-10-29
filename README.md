@@ -24,4 +24,5 @@ Menu contains:-
    2.  Delete User Account
    3.  Check the total balance.
    4.  Change Password for Admin Account
-   5.  Exit
+   5.  Change Password for user
+   6.  Exit
