@@ -677,12 +677,26 @@ def adminLogin():
                             clear_screen()
 
                     elif choiceT == 6:
+                        # Fetch all user records from the collection
+                        users = user_collection.find({})
+
+                        # Iterate through each user and print the desired fields
+                        for user in users:
+                            print("----------------------------")
+                            print("Name:", user["name"])
+                            print("User ID:", user["user_id"])
+                            print("Gmail:", user["gmail"])
+                            print("Balance:", user["balance"])
+                            print("----------------------------")
+                            print()  # Empty line for readability
+
+                    elif choiceT == 7:
                         print(" ______________________________________________________________")
                         print("|                                                              |")
                         print("|                    EXITING ADMIN DASHBOARD                   |")
                         print("|                                                              |")
                         print(" --------------------------------------------------------------")
-                        sleep(4)
+                        sleep(2)
                         sys.exit()
 
                     else:
