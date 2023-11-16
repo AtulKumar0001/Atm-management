@@ -18,7 +18,7 @@ Withdrawal limit: $50,000.
 
 If a user enters an incorrect password, the account will be locked for 10 minutes.
 
-Only the administrator can delete, lock, or unlock the user account.
+Only the administrator can delete, lock, show all accounts, or unlock the user account.
 
 A timeout function. If the user doesn't enter any input for 30 seconds, then the program will exit.Implemented on Login and change password panel (can be implemented on other panel too)
 
@@ -34,9 +34,10 @@ Menu contains:-
         5. Exit
     4. Exit
 2. Admin panel
-   1.  Lock/Unlock User Account
-   2.  Delete User Account
+   1. Lock or unlock the user account
+   2.  Delete the user account
    3.  Check the total balance.
    4.  Change Password for Admin Account
    5.  Change Password for user
-   6.  Exit
+   6.  Show all the user accounts
+   7.  Exit
