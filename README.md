@@ -32,13 +32,16 @@ Menu contains:-
         3. Check Balance
         4. Change Password
         5. Exit
-    4. Exit
+    3. Exit
 2. Admin panel
-   1. Lock or unlock the user account
-   2.  Delete the user account
-   3.  Check the total balance.
-   4.  Change Password for Admin Account
-   5.  Change Password for user
-   6.  Show all the user accounts
-   7.  Exit
+    1. Register Admin
+    2. Admin login
+        1. Lock or unlock the user account
+        2.  Delete the user account
+        3.  Check the total balance.
+        4.  Change Password for Admin Account
+        5.  Change Password for user
+        6.  Show all the user accounts
+        7.  Exit
+    3.Exit
 3. Exit 
