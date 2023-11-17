@@ -41,3 +41,4 @@ Menu contains:-
    5.  Change Password for user
    6.  Show all the user accounts
    7.  Exit
+3. Exit 
