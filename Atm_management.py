@@ -18,7 +18,7 @@ import threading
 
 
 # Connect to MongoDB Atlas. please replace this with your own
-client = pymongo.MongoClient("mongodb+srv://atulkumar86281:Passwordatlas1@cluster0.du9k7ti.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("Your connection String")
 # Database name
 db = client["Atm_management"]
 
@@ -73,8 +73,8 @@ def get_user_input_with_timeout(prompt, timeout):
 #Function for Sending emails
 
 def send_email(subject, message, to_email):
-    from_email = "atul81595@gmail.com"
-    app_password = "bcjm azmj hssv doit"  # generate from app password option in two step verification
+    from_email = "Your gmail"
+    app_password = "Demo: bcdd azmj hssv dabt"  # generate from app password option in two step verification
 
     msg = MIMEMultipart()
     msg['From'] = from_email 
