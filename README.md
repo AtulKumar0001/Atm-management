@@ -4,7 +4,7 @@
 
 Add your connection string.
 
-Add your gmail.
+Add your email.
 
 Add your gmail password (Google account setting) > Security > (Make sure 2-step verification is on.) > App passwords.
 
@@ -16,9 +16,13 @@ Deposit limit: $100,000.
 
 Withdrawal limit: $50,000.
 
+Admin deposit limit: 300k
+
 If a user enters an incorrect password, the account will be locked for 10 minutes.
 
 Only the administrator can delete, lock, show all accounts, or unlock the user account.
+
+If the total balance of the user and admin is below 75k, then it will print a message saying the balance is below 75k.
 
 A timeout function. If the user doesn't enter any input for 30 seconds, then the program will exit.Implemented on Login and change password panel (can be implemented on other panel too)
 
@@ -42,6 +46,7 @@ Menu contains:-
         4.  Change Password for Admin Account
         5.  Change Password for user
         6.  Show all the user accounts
-        7.  Exit
+        7.  Deposit
+        8.  Exit
     3.Exit
 3. Exit 
