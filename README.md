@@ -1,5 +1,9 @@
 # Atm-management
 
+# libraries to install
+    pip install pymongo
+
+
 #Important:
 
 Add your connection string.
