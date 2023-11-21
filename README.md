@@ -2,6 +2,7 @@
 
 # libraries to install
     pip install pymongo
+    pip install colorama
 
 
 #Important:
