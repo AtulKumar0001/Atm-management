@@ -103,17 +103,16 @@ def countNumber(value):
     count = value.count_documents({})
     return count
 
-
 # function for user login 
 def Userlogin():
     count = user_collection.count_documents({})
     
     if count == 0:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|                 NO USER IS REGISTERED                        |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 55)
+        print("|" + " " * 55 + "|")
+        print(f"|                NO USER IS REGISTERED                  |")
+        print("|" + " " * 55 + "|")
+        print(Fore.BLUE + " " + "-" * 55 + Style.RESET_ALL)
         sys.exit()
 
 
@@ -145,55 +144,54 @@ def Userlogin():
             stored_password = user["password"]
 
             if password == stored_password:
-                print("  ______________________________________________________________")
-                print(" |                                                              |")
-                print(f" |         Login successful. Welcome,  {user['name']}                     |")
-                print(" |                                                              |")
-                print("  --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print(f"|              Login successful. Welcome,  {user['name']}              |")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                 sleep(2)
                 clear_screen()
                 # Reset login attempts on successful login
                 user_collection.update_one({"user_id": user_id}, {"$set": {"login_attempts": 0,"account_locked": False,"lock_time":0}})
 
                 while True:
-                    print(" __________________________________________________")
-                    print("|                                                  |")
-                    print("|               1. DEPOSIT MONEY                   |")
-                    print("|                                                  |")
-                    print("|               2. WITHDRAW MONEY                  |")
-                    print("|                                                  |")
-                    print("|               3. CHECK BALANCE                   |")
-                    print("|                                                  |")
-                    print("|               4. CHANGE PASSWORD                 |")
-                    print("|                                                  |")
-                    print("|               5. EXIT                            |")
-                    print("|                                                  |")
-                    print("|             PLEASE CHOOSE YOUR OPTION            |")
-                    print(" --------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 50)
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "1. DEPOSIT MONEY" + " " * 19 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "2. WITHDRAW MONEY" + " " * 18 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "3. CHECK BALANCE" + " " * 19 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "4. CHANGE PASSWORD" + " " * 17 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "5. EXIT" + " " * 28 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 10 + "PLEASE CHOOSE YOUR OPTION" + " " * 15 + "|")
+                    print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
                     choiceT = int(input("Enter: "))
                     sleep(1)
                     clear_screen()
                     print("")
 
                     if choiceT == 1:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|       PLEASE ENTER THE AMOUNT YOU WANT TO DEPOSIT            |")
-                        print("|                                                              |")
-                        print("|                DEPOSIT LIMIT IS 100K                         |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 70)
+                        print("|" + " " * 70 + "|")
+                        print("|                PLEASE ENTER THE AMOUNT YOU WANT TO DEPOSIT           |")
+                        print("|" + " " * 70 + "|")
+                        print("|" + " " * 25 + "DEPOSIT LIMIT IS 100K" + " " * 24 + "|")
+                        print(Fore.BLUE + " " + "-" * 70 + Style.RESET_ALL)
                         amountD = int(input("Enter: "))
                         clear_screen()
 
                         if amountD <= 100000:
                             user_collection.update_one({"user_id": user_id}, {"$inc": {"balance":amountD}})
                             print("")
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 AMOUNT DEPOSITED SUCCESSFULLY                |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "AMOUNT DEPOSITED SUCCESSFULLY" + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             user = user_collection.find_one({"user_id": user_id})
                             subject = "Money Credited"
                             message = f"Your account is credited by INR {amountD}. ACC balance is {user['balance']} "
@@ -203,39 +201,38 @@ def Userlogin():
                             break
 
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PLEASE ENTER WITHIN LIMIT                    |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 55)
+                        print("|" + " " * 55 + "|")
+                        print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER WITHIN LIMIT" + " " * 15 + "|")
+                        print("|" + " " * 55 + "|")
+                        print(Fore.BLUE + " " + "-" * 55 + Style.RESET_ALL)
 
                     elif choiceT == 2:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|       PLEASE ENTER THE AMOUNT YOU WANT TO WITHDRAW           |")
-                        print("|                                                              |")
-                        print("|                WITHDRAW LIMIT IS 50K                         |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 70)
+                        print("|" + " " * 70 + "|")
+                        print("|                PLEASE ENTER THE AMOUNT YOU WANT TO WITHDRAW          |")
+                        print("|" + " " * 70 + "|")
+                        print("|" + " " * 23 + "PLEASE CHOOSE YOUR OPTION" + " " * 22 + "|")
+                        print(Fore.BLUE + " " + "-" * 70 + Style.RESET_ALL)
                         withdraw = int(input("Enter: "))
 
                         if withdraw <= 50000:
                             available = user["balance"]
                             if withdraw > available:
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                       BALANCE IS LOW                         |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 50)
+                                print("|" + " " * 50 + "|")
+                                print("|" + " " * 16 + Fore.BLUE + "BALANCE IS LOW" + " " * 20 + "|")
+                                print("|" + " " * 50 + "|")
+                                print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
                                 sleep(4)
                                 clear_screen()
                             else:
                                 user_collection.update_one({"user_id": user_id}, {"$inc": {"balance":-withdraw}})
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 MONEY WITHDRAWN SUCCESSFULLY                 |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 16 + Fore.BLUE + "MONEY WITHDRAWN SUCCESSFULLY" + " " * 16 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                                 user = user_collection.find_one({"user_id": user_id})
                                 subject = "Money Debited"
                                 message = f"Your account is Debited by INR {withdraw}. ACC balance is {user['balance']} "
@@ -244,12 +241,12 @@ def Userlogin():
                                 sys.exit()
 
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PLEASE ENTER WITHIN LIMIT                    |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
-                            # break
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 17 + Fore.BLUE + "PLEASE ENTER WITHIN LIMIT" + " " * 18 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
+                                                        # break
 
                     elif choiceT == 3:
                         # clear_screen()
@@ -294,11 +291,11 @@ def Userlogin():
                             
 
                             user_collection.update_one({"user_id": user_id}, {"$set": {"password":new_pass}})
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 16 + Fore.BLUE + "PASSWORD UPDATED SUCCESSFULLY" + " " * 15 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             subject = "Password Changed"
                             message = f"Your account Password has been changed "
                             to_email = user["gmail"]  # Replace with the user's email
@@ -306,48 +303,48 @@ def Userlogin():
                             sys.exit()
 
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PASSWORD IS WRONG.TRY AGAIN.                 |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "PASSWORD IS WRONG.TRY AGAIN" + " " * 18 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
 
                     elif choiceT == 5:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                    EXITING USER DASHBOARD                    |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 20 + Fore.BLUE + "EXITING USER DASHBOARD" + " " * 18 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         sleep(4)
                         break
 
                     else:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                 PLEASE ENTER A VALID CHOICE                  |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 16 + Fore.BLUE + "PLEASE ENTER A VALID CHOICE" + " " * 17 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         sleep(2)
                 
             else:
                 
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|             Incorrect password. Login failed.                |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print("|" + " " * 13 + Fore.BLUE + "Incorrect Password. Login failed" + " " * 15 + "|")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                 # Update login attempts and lock the account if needed
                 user_collection.update_one({"user_id": user_id}, {"$inc": {"login_attempts": 1}})
                 login_attempts = user_collection.find_one({"user_id": user_id})["login_attempts"]
 
                 if login_attempts >= MAX_LOGIN_ATTEMPTS:
-                    print("  __________________________________________________________________________________________________")
-                    print(" |                                                                                                  |")
-                    print(f" |  Account locked for {LOCK_DURATION_SECONDS // 60} minutes due to too many failed login attempts. |")
-                    print(" |                                                                                                  |")
-                    print("  --------------------------------------------------------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 84)
+                    print("|" + " " * 84 + "|")
+                    print(f"|       Account is locked for {remaining_lock_time // 60} minutes due to too many failed login attempts.       |")
+                    print("|" + " " * 84 + "|")
+                    print(Fore.BLUE + " " + "-" * 84 + Style.RESET_ALL)
                     user_collection.update_one({"user_id": user_id}, {"$set": {"account_locked": True, "lock_time": int(time.time())}})
                     user = user_collection.find_one({"user_id": user_id})
                     subject = "Account locked"
@@ -362,26 +359,26 @@ def Userlogin():
             if current_time - lock_time >= LOCK_DURATION_SECONDS:
                 # Unlock the account if the lock duration has passed
                 user_collection.update_one({"user_id": user_id}, {"$set": {"account_locked": False,"lock_time":0,"login_attempts": 0}})
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|     Account unlocked. You may attempt to login Now           |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 62)
+                print("|" + " " * 62 + "|")
+                print("|" + " " * 7 + Fore.BLUE + "Account unlocked. You may attempt to login Now" + Fore.BLUE + " " * 9 + "|")
+                print("|" + " " * 62 + "|")
+                print(Fore.BLUE + " " + "-" * 62 + Style.RESET_ALL)
 
             else:
                 remaining_lock_time = LOCK_DURATION_SECONDS - (current_time - lock_time)
-                print("  ________________________________________________________________________")
-                print(" |                                                                        |")
-                print(f" | Account is locked. Try again after {remaining_lock_time // 60} minutes                           |")
-                print(" |                                                                        |")
-                print("  -------------------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 75)
+                print("|" + " " * 75 + "|")
+                print(f"|                Account is locked. Try again after {remaining_lock_time // 60} minutes               |")
+                print("|" + " " * 75 + "|")
+                print(Fore.BLUE + " " + "-" * 75 + Style.RESET_ALL)
 
     else:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|         User not found. Please check your user_id            |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 9 + Fore.BLUE + "USER not found. Please check your user_id" + " " * 10 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
 # function for admin login 
 
@@ -389,11 +386,11 @@ def adminLogin():
     count = admin_collection.count_documents({})
 
     if count == 0:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|                NO ADMIN IS REGISTERED                        |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 55)
+        print("|" + " " * 55 + "|")
+        print(f"|                NO ADMIN IS REGISTERED                 |")
+        print("|" + " " * 55 + "|")
+        print(Fore.BLUE + " " + "-" * 55 + Style.RESET_ALL)
         sys.exit()
 
     admin_id = None
@@ -420,11 +417,11 @@ def adminLogin():
             stored_password = admin["password"]
 
             if password == stored_password:
-                print("  ______________________________________________________________")
-                print(" |                                                              |")
-                print(f" |         Login successful. Welcome,  {admin['name']}                     |")
-                print(" |                                                              |")
-                print("  --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print(f"|              Login successful. Welcome,  {admin['name']}              |")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                 sleep(2)
                 clear_screen()
                 print("")
@@ -432,38 +429,38 @@ def adminLogin():
                 admin_collection.update_one({"admin_id": admin_id}, {"$set": {"login_attempts": 0,"account_locked": False,"lock_time":0}})
 
                 while True:
-                    print(" __________________________________________________")
-                    print("|                                                  |")
-                    print("|               1. LOCK/UNLOCK USER ACC            |")
-                    print("|                                                  |")
-                    print("|               2. DELETE USER ACC                 |")
-                    print("|                                                  |")
-                    print("|               3. CHECK BALANCE                   |")
-                    print("|                                                  |")
-                    print("|               4. CHANGE PASSWORD                 |")
-                    print("|                                                  |")
-                    print("|               5. CHANGE USER PASSWORD            |")
-                    print("|                                                  |")
-                    print("|               6. SHOW ALL USERS                  |")
-                    print("|                                                  |")
-                    print("|               7. DEPOSIT MONEY                   |")
-                    print("|                                                  |")
-                    print("|               8. EXIT                            |")
-                    print("|                                                  |")
-                    print("|             PLEASE CHOOSE YOUR OPTION            |")
-                    print(" --------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 50)
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "1. LOCK/UNLOCK USER ACC" + " " * 12 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "2. DELETE USER ACC" + " " * 17 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "3. CHECK BALANCE" + " " * 19 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "4. CHANGE PASSWORD" + " " * 17 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "5. CHANGE USER PASSWORD" + " " * 12 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "6. SHOW ALL USERS" + " " * 18 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "7. DEPOSIT MONEY" + " " * 19 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 15 + "8. EXIT" + " " * 28 + "|")
+                    print("|" + " " * 50 + "|")
+                    print("|" + " " * 10 + "PLEASE CHOOSE YOUR OPTION" + " " * 15 + "|")
+                    print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
                     choiceT = int(input("Enter: "))
                     clear_screen()
 
                     if choiceT == 1:
                         if user_collection.count_documents({}) == 0:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|              There is no user registered.                    |")
-                            print("|                                                              |")
-                            print("|              Please register any user and try again.         |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "There is no user registered. " + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "Please register any user and try again " + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
                             continue
@@ -477,31 +474,31 @@ def adminLogin():
                         clear_screen()
 
                         if oldPass == enteredPass:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|      PLEASE ENTER THE ACC ID YOU WANT TO LOCK\\UNLOCK         |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 6 + Fore.BLUE + "PLEASE ENTER THE ACC ID YOU WANT TO LOCK\\UNLOCK" + " " * 7 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             acc = input("Enter: ")
                             clear_screen()
                             user = user_collection.find_one({"user_id": acc})
-                            print(" ______________________________________________________________________")
-                            print("|                                                                      |")
+                            print(Fore.BLUE + " " + "_" * 70)
+                            print("|" + " " * 70 + "|")
                             print("|     If you want to Lock user, press 'L'. To Unlock, press 'U':       |")
-                            print("|                                                                      |")
-                            print("|                     PLEASE CHOOSE YOUR OPTION                        |")
-                            print(" ---------------------------------------------------------------------")
+                            print("|" + " " * 70 + "|")
+                            print("|" + " " * 21 + "PLEASE CHOOSE YOUR OPTION" + " " * 24 + "|")
+                            print(Fore.BLUE + " " + "-" * 70 + Style.RESET_ALL)
                             option = input("Enter: ")
                             clear_screen()
 
                             if user and option.upper() == 'L':
                                 user_collection.update_one({"user_id": acc}, {"$set": {"account_locked":True,"lock_time": int(time.time())}})
                                 print("")
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 AMOUNT LOCKED SUCCESSFULLY                   |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 15 + Fore.BLUE + "ACCOUNT LOCKED SUCCESSFULLY  " + " " * 16 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
                                 # admin = admin_collection.find_one({"admin_id": admin_id})
                                 # subject = "Money Credited"
@@ -514,37 +511,38 @@ def adminLogin():
                             elif user and option.upper() == 'U':
                                 user_collection.update_one({"user_id": acc}, {"$set": {"account_locked":False,"lock_time":0}})
                                 print("")
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 AMOUNT UNLOCKED SUCCESSFULLY                 |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 15 + Fore.BLUE + "ACCOUNT UNLOCKED SUCCESSFULLY  " + " " * 14 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
                             else:
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 PLEASE ENTER CORRECT USER ID                 |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER CORRECT USER ID " + " " * 16 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
+
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PASSWORD IS WRONG.TRY AGAIN.                 |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "PASSWORD IS WRONG.TRY AGAIN" + " " * 18 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
 
 
                     elif choiceT == 2:
                         if user_collection.count_documents({}) == 0:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|              There is no user registered.                    |")
-                            print("|                                                              |")
-                            print("|              Please register any user and try again.         |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "There is no user registered. " + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "Please register any user and try again " + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             # sys.exit()
                             sleep(4)
                             clear_screen()
@@ -560,11 +558,11 @@ def adminLogin():
                         if oldPass == enteredPass:
 
                             print("Are you sure you want to Delete?. You cannot Redo this Action!")
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|         PLEASE ENTER THE ACC ID YOU WANT TO DELETE           |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 9 + Fore.BLUE + "PLEASE ENTER THE ACC ID YOU WANT TO DELETE" + " " * 9 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
                             user_to_delete = input("Enter the user ID you want to delete: ")
 
@@ -573,41 +571,41 @@ def adminLogin():
 
                             # Check if the delete operation was successful
                             if result.deleted_count == 1:
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print(f"|  User with user ID {user_to_delete} has been deleted                 |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print(f"|     User with user ID {user_to_delete} has been deleted             |")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                                 sleep(4)
                                 clear_screen()
 
                             else:
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print(f"|     NO User found with user ID {user_to_delete}                            |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print(f"|         NO User found with user ID {user_to_delete}            |")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                                 sleep(5)
                                 clear_screen()
                                 # break
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PASSWORD IS WRONG.TRY AGAIN.                 |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "PASSWORD IS WRONG.TRY AGAIN" + " " * 18 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
 
                     elif choiceT == 3:
                         if user_collection.count_documents({}) == 0:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|              There is no user registered.                    |")
-                            print("|                                                              |")
-                            print("|              Please register any user and try again.         |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "There is no user registered. " + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "Please register any user and try again " + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             # sys.exit()
                             sleep(4)
                             clear_screen()
@@ -647,22 +645,22 @@ def adminLogin():
                         total_balance = list(total_balance_result)[0]["total_balance"] + list(total_balance_result2)[0]["total_balance"]
                         if total_balance < 75000:
                             print("")
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|             Total Account balance is below 75k               |")
-                            print("|                                                              |")
-                            print("|                  Please Deposit some amount                  |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 14 + Fore.BLUE + "Total Account balance is below 75k " + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 17 + Fore.BLUE + "Please Deposit some amount " + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         else:
                             print("")
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                      TOTAL BALANCE                           |")
-                            print("|                                                              |")
-                            print(f"|                 Total Balance = {total_balance}                        |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 59 + "|")
+                            print("|" + " " * 22 + Fore.BLUE + "TOTAL BALANCE" + " " * 24 + "|")
+                            print("|" + " " * 59 + "|")
+                            print(f"|                  Total Balance = {total_balance}                    |")
+                            print("|" + " " * 59 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             input("Press enter to continue: ")
                             clear_screen()
 
@@ -678,11 +676,11 @@ def adminLogin():
                         # new_pass = input("Enter: ")
 
                         admin_collection.update_one({"admin_id": admin_id}, {"$set": {"password":new_pass}})
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 16 + Fore.BLUE + "PASSWORD UPDATED SUCCESSFULLY" + " " * 15 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         subject = "Password Changed"
                         message = f"Your Admin account Password has been changed "
                         to_email = admin["gmail"]  # Replace with the user's email
@@ -692,13 +690,13 @@ def adminLogin():
                     elif choiceT == 5:
 
                         if user_collection.count_documents({}) == 0:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|              There is no user registered.                    |")
-                            print("|                                                              |")
-                            print("|              Please register any user and try again.         |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "There is no user registered " + " " * 17 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "Please register any user and try again." + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
                             continue
@@ -724,11 +722,11 @@ def adminLogin():
                             # Search for the user by user_id
                             user = user_collection.find_one({"user_id": user_id})
                             if not user:
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 PLEASE ENTER CORRECT USER ID                 |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 16 + Fore.BLUE + "PLEASE ENTER CORRECT USER ID" + " " * 16 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                                 sleep(3)
                                 clear_screen()
                             else:
@@ -744,11 +742,11 @@ def adminLogin():
 
                                 clear_screen()
                                 user_collection.update_one({"user_id": user_id}, {"$set": {"password":new_pass}})
-                                print(" ______________________________________________________________")
-                                print("|                                                              |")
-                                print("|                 PASSWORD UPDATED SUCCESSFULLY                |")
-                                print("|                                                              |")
-                                print(" --------------------------------------------------------------")
+                                print(Fore.BLUE + " " + "_" * 60)
+                                print("|" + " " * 60 + "|")
+                                print("|" + " " * 16 + Fore.BLUE + "PASSWORD UPDATED SUCCESSFULLY" + " " * 15 + "|")
+                                print("|" + " " * 60 + "|")
+                                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                                 subject = "Password Changed"
                                 message = f"Your User account Password has been changed by the admin. For any query please contact to your admin"
                                 to_email = user["gmail"]  # Replace with the user's email
@@ -757,14 +755,25 @@ def adminLogin():
                                 sleep(4)
                                 clear_screen()
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 PASSWORD IS WRONG.TRY AGAIN.                 |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 16 + Fore.BLUE + "PASSWORD IS WRONG.TRY AGAIN." + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             sleep(4)
                             clear_screen()
                     elif choiceT == 6:
+                        if user_collection.count_documents({}) == 0:
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "There is no user registered " + " " * 17 + "|")
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "Please register any user and try again." + " " * 11 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
+                            sleep(4)
+                            clear_screen()
+                            continue
                         # Fetch all user records from the collection
                         users = user_collection.find({})
 
@@ -778,13 +787,13 @@ def adminLogin():
                             print("----------------------------")
                             print()  # Empty line for readability
                     elif choiceT == 7:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|       PLEASE ENTER THE AMOUNT YOU WANT TO DEPOSIT            |")
-                        print("|                                                              |")
-                        print("|                DEPOSIT LIMIT IS 300K                         |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 7 + Fore.BLUE + "PLEASE ENTER THE AMOUNT YOU WANT TO DEPOSIT " + " " * 9 + "|")
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 19 + Fore.BLUE + "DEPOSIT LIMIT IS 300K " + " " * 19 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         amount = int(input("Enter: "))
                         clear_screen()
 
@@ -808,15 +817,14 @@ def adminLogin():
                         # Extract the total balance from the result
                         balance = admin_collection.find_one({},{"_id":0,"balance":1})
                         total_balance = balance['balance']
-                        print(total_balance)
                         if amount <= 300000 and total_balance < 300000:
                             admin_collection.update_one({"admin_id": admin_id}, {"$inc": {"balance":amount}})
                             print("")
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|                 AMOUNT DEPOSITED SUCCESSFULLY                |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 60)
+                            print("|" + " " * 60 + "|")
+                            print("|" + " " * 15 + Fore.BLUE + "AMOUNT DEPOSITED SUCCESSFULLY" + " " * 16 + "|")
+                            print("|" + " " * 60 + "|")
+                            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                             admin = admin_collection.find_one({"admin_id": admin_id})
                             subject = "Money Credited"
                             message = f"Your account is credited by INR {amount}. ACC balance is {admin['balance']} "
@@ -825,45 +833,46 @@ def adminLogin():
                             sys.exit()
                             break
                         else:
-                            print(" ______________________________________________________________")
-                            print("|                                                              |")
-                            print("|    PLEASE ENTER WITHIN LIMIT OR CHECK ACCOUNT TOTAL LIMIT    |")
-                            print("|                                                              |")
-                            print(" --------------------------------------------------------------")
+                            print(Fore.BLUE + " " + "_" * 75)
+                            print("|" + " " * 75 + "|")
+                            print("|" + " " * 10 + Fore.BLUE + "PLEASE ENTER WITHIN LIMIT OR CHECK ACCOUNT TOTAL LIMIT " + " " * 10 + "|")
+                            print("|" + " " * 75 + "|")
+                            print(Fore.BLUE + " " + "-" * 75 + Style.RESET_ALL)
 
                     elif choiceT == 8:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                    EXITING ADMIN DASHBOARD                   |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 18 + Fore.BLUE + "EXITING ADMIN DASHBOARD" + " " * 19 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                         sleep(2)
                         break
 
                     else:
-                        print(" ______________________________________________________________")
-                        print("|                                                              |")
-                        print("|                 PLEASE ENTER A VALID CHOICE                  |")
-                        print("|                                                              |")
-                        print(" --------------------------------------------------------------")
+                        print(Fore.BLUE + " " + "_" * 60)
+                        print("|" + " " * 60 + "|")
+                        print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER A VALID CHOICE" + " " * 18 + "|")
+                        print("|" + " " * 60 + "|")
+                        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
+
 
             else:
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|             Incorrect password. Login failed.                |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print("|" + " " * 13 + Fore.BLUE + "Incorrect Password. Login failed" + " " * 15 + "|")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                 # Update login attempts and lock the account if needed
                 admin_collection.update_one({"admin_id": admin_id}, {"$inc": {"login_attempts": 1}})
                 login_attempts = admin_collection.find_one({"admin_id": admin_id})["login_attempts"]
 
                 if login_attempts >= MAX_LOGIN_ATTEMPTS:
                     
-                    print("  __________________________________________________________________________________________________")
-                    print(" |                                                                                                  |")
-                    print(f" |  Account locked for {LOCK_DURATION_SECONDS // 60} minutes due to too many failed login attempts. |")
-                    print(" |                                                                                                  |")
-                    print("  --------------------------------------------------------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 84)
+                    print("|" + " " * 84 + "|")
+                    print(f"|       Account is locked for {remaining_lock_time // 60} minutes due to too many failed login attempts.       |")
+                    print("|" + " " * 84 + "|")
+                    print(Fore.BLUE + " " + "-" * 84 + Style.RESET_ALL)
                     admin_collection.update_one({"admin_id": admin_id}, {"$set": {"account_locked": True, "lock_time": int(time.time())}})
                     subject = "Account locked"
                     message = f"Your Admin account has been locked for 10 minutes. Due to too many failed login attempts.Try to login later"
@@ -877,64 +886,64 @@ def adminLogin():
             if current_time - lock_time >= LOCK_DURATION_SECONDS:
                 # Unlock the account if the lock duration has passed
                 admin_collection.update_one({"admin_id": admin_id}, {"$set": {"account_locked": False,"lock_time":0,"login_attempts": 0}})
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|     Account unlocked. You may attempt to login later         |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print(f"|       Account unlocked. You may now attempt to login       |")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
             else:
                 remaining_lock_time = LOCK_DURATION_SECONDS - (current_time - lock_time)
-                print("  ________________________________________________________________________")
-                print(" |                                                                        |")
-                print(f" | Account is locked. Try again after {remaining_lock_time // 60} minutes |")
-                print(" |                                                                        |")
-                print("  -------------------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print(f"|       Account is locked. Try again after {remaining_lock_time // 60} minutes         |")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
     else:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|        ADMIN not found. Please check your admin_id           |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 8 + Fore.BLUE + "ADMIN not found. Please check your admin_id" + " " * 9 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
 def userRegistration():
     user_count = countNumber(user_collection)
     if user_count >= 5:
-        print(" ______________________________________________________________________")
-        print("|                                                                      |")
-        print("|             CANNOT ADD ANOTHER USER.LIMIT EXCEEDED                   |")
-        print("|                                                                      |")
-        print(" ---------------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 10 + Fore.BLUE + "CANNOT ADD ANOTHER USER. LIMIT EXCEEDED" + " " * 11 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         sys.exit()  # Use sys.exit() to exit the program
 
     while user_count < 6:
         if admin_collection.count_documents({}) == 0:
-            print(" ______________________________________________________________")
-            print("|                                                              |")
-            print("|                 PLEASE ENTER ADMIN FIRST                     |")
-            print("|                                                              |")
-            print(" --------------------------------------------------------------")
+            print(Fore.BLUE + " " + "_" * 60)
+            print("|" + " " * 60 + "|")
+            print("|" + " " * 18 + Fore.BLUE + "PLEASE ENTER ADMIN FIRST" + " " * 18 + "|")
+            print("|" + " " * 60 + "|")
+            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
             sys.exit()
         unique_id = uuid.uuid4()
         unique_id_str = str(unique_id)
         user_id = unique_id_str[:4]
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|                 PLEASE ENTER USER DETAILS                    |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 17 + Fore.BLUE + "PLEASE ENTER USER DETAILS" + " " * 18 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         name = input("Enter the name of the user: ")
         password = input("Enter the password of the user: ")
         gmail = input("Please enter your gmail: ")
         clear_screen()
 
         if name == "" or password == "" or gmail == "" :
-            print(" ______________________________________________________________")
-            print("|                                                              |")
-            print("|             PLEASE ENTER CORRECT VALUES                      |")
-            print("|                                                              |")
-            print(" --------------------------------------------------------------")
+            print(Fore.BLUE + " " + "_" * 60)
+            print("|" + " " * 60 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER CORRECT VALUES" + " " * 18 + "|")
+            print("|" + " " * 60 + "|")
+            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
             sys.exit()
         unique = name.split()[0] + user_id
         data = {
@@ -946,11 +955,11 @@ def userRegistration():
             "gmail":gmail,
             "balance":5000
         }
-        print("  ____________________________________________________________________________________________")
-        print(" |                                                                                            |")
-        print(F" |  User created Successfully and the user id is {unique} .Please use this id to login       |")
-        print(" |                                                                                            |")
-        print("  ---------------------------------------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 89)
+        print("|" + " " * 89 + "|")
+        print(f"|USER ACC created Successfully and the user id is {unique}. Please use this id to login   |")
+        print("|" + " " * 89 + "|")
+        print(Fore.BLUE + " " + "-" * 89 + Style.RESET_ALL)
         user_collection.insert_one(data)
         #Email messages 
         user = user_collection.find_one({"user_id": unique})
@@ -959,21 +968,21 @@ def userRegistration():
         to_email = user["gmail"]  # Replace with the user's email
         send_email(subject, message, to_email)
         clear_screen()
-        print(" ______________________________________________________________________")
-        print("|                                                                      |")
+        print(Fore.BLUE + " " + "_" * 70)
+        print("|" + " " * 70 + "|")
         print("|  If you want to add another user, press 'Y'. To exit, press 'N':     |")
-        print("|                                                                      |")
-        print("|                     PLEASE CHOOSE YOUR OPTION                        |")
-        print(" ---------------------------------------------------------------------")
+        print("|" + " " * 70 + "|")
+        print("|" + " " * 21 + "PLEASE CHOOSE YOUR OPTION" + " " * 24 + "|")
+        print(Fore.BLUE + " " + "-" * 70 + Style.RESET_ALL)
         another = input("Enter: ")
         clear_screen()
 
         if user_count >= 5:
-            print(" ______________________________________________________________________")
-            print("|                                                                      |")
-            print("|             CANNOT ADD ANOTHER USER.LIMIT EXCEEDED                   |")
-            print("|                                                                      |")
-            print(" ---------------------------------------------------------------------")
+            print(Fore.BLUE + " " + "_" * 60)
+            print("|" + " " * 60 + "|")
+            print("|" + " " * 10 + Fore.BLUE + "CANNOT ADD ANOTHER USER. LIMIT EXCEEDED" + " " * 11 + "|")
+            print("|" + " " * 60 + "|")
+            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
             sys.exit()  # Use sys.exit() to exit the program
 
         if another.upper() != 'Y':
@@ -985,19 +994,19 @@ def userRegistration():
 def adminRegistration():
     admin_count = countNumber(admin_collection)
     if admin_count >= 1:
-        print(" ______________________________________________________________________")
-        print("|                                                                      |")
-        print("|             CANNOT ADD ANOTHER ADMIN.LIMIT EXCEEDED                  |")
-        print("|                                                                      |")
-        print(" ---------------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 10 + Fore.BLUE + "CANNOT ADD ANOTHER ADMIN. LIMIT EXCEEDED" + " " * 10 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         sys.exit()  # Use sys.exit() to exit the program
 
     while admin_count < 1:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|                 PLEASE ENTER ADMIN DETAILS                   |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER ADMIN DETAILS" + " " * 19 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         unique_id = uuid.uuid4()
         unique_id_str = str(unique_id)
         admin_id = unique_id_str[:4]
@@ -1007,11 +1016,11 @@ def adminRegistration():
         clear_screen() 
 
         if name == "" or password == "" or gmail == "" :
-            print(" ______________________________________________________________")
-            print("|                                                              |")
-            print("|             PLEASE ENTER CORRECT VALUES                      |")
-            print("|                                                              |")
-            print(" --------------------------------------------------------------")
+            print(Fore.BLUE + " " + "_" * 60)
+            print("|" + " " * 60 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER CORRECT VALUES" + " " * 18 + "|")
+            print("|" + " " * 60 + "|")
+            print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
             sys.exit()
         unique = name.split()[0] + admin_id 
         data = {
@@ -1024,11 +1033,11 @@ def adminRegistration():
             "gmail":gmail
         }
         
-        print("  ____________________________________________________________________________________________")
-        print(" |                                                                                            |")
-        print(f" | ADMIN ACC created Successfully and the user id is {unique} .Please use this id to login    |")
-        print(" |                                                                                            |")
-        print("  -------------------------------------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 89)
+        print("|" + " " * 89 + "|")
+        print(f"|ADMIN ACC created Successfully and the ADMIN id is {unique}. Please use this id to login |")
+        print("|" + " " * 89 + "|")
+        print(Fore.BLUE + " " + "-" * 89 + Style.RESET_ALL)
         admin_collection.insert_one(data)
         admin = admin_collection.find_one({"admin_id": unique})
         subject = "Account Created"
@@ -1038,79 +1047,78 @@ def adminRegistration():
         break
 
 def main():
-    print(" __________________________________________________")
-    print("|                                                  |")
-    print("|               WELCOME TO THE ATM                 |")
-    print("|                                                  |")
-    print("|               1. USER INTERFACE                  |")
-    print("|                                                  |")
-    print("|               2. ADMIN INTERFACE                 |")
-    print("|                                                  |")
-    print("|               3. EXIT                            |")
-    print("|                                                  |")
-    print("|             PLEASE CHOOSE YOUR OPTION            |")
-    print(" --------------------------------------------------")
+    print(Fore.BLUE + " " + "_" * 50)
+    print("|" + " " * 50 + "|")
+    print("|" + " " * 15 + Fore.BLUE + "WELCOME TO THE ATM" + " " * 17 + "|")
+    print("|" + " " * 50 + "|")
+    print("|" + " " * 12 + "1. USER INTERFACE" + " " * 21 + "|")
+    print("|" + " " * 50 + "|")
+    print("|" + " " * 12 + "2. ADMIN INTERFACE" + " " * 20 + "|")
+    print("|" + " " * 50 + "|")
+    print("|" + " " * 12 + "3. EXIT" + " " * 31 + "|")
+    print("|" + " " * 50 + "|")
+    print("|" + " " * 12 + "PLEASE CHOOSE YOUR OPTION" + " " * 13 + "|")
+    print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
     mainChoice = int(input("Enter: "))
     clear_screen()
 
     if mainChoice == 1:
 
         while True:
-            print(" __________________________________________________")
-            print("|                                                  |")
-            print("|               1. REGISTER USER                   |")
-            print("|                                                  |")
-            print("|               2. USER LOGIN                      |")
-            print("|                                                  |")
-            print("|               3. EXIT                            |")
-            print("|                                                  |")
-            print("|             PLEASE CHOOSE YOUR OPTION            |")
-            print(" --------------------------------------------------")
+            print(Fore.BLUE + " " + "_" * 50)
+            print("|" + " " *50 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "1. REGISTER USER" + " " * 19 + "|")
+            print("|" + " " * 50 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "2. USER LOGIN" + " " * 22 + "|")
+            print("|" + " " * 50 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "3. EXIT" + " " * 28 + "|")
+            print("|" + " " * 50 + "|")
+            print("|" + " " * 15 + Fore.BLUE + "PLEASE CHOOSE YOUR OPTION" + " " * 10 + "|")
+            print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
             choice = int(input("Enter: "))
             clear_screen()
 
             if choice == 1:
                 userRegistration()
-                break
 
             elif choice == 2:
                 Userlogin()
                 
 
             elif choice == 3:
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|                    EXITING USER DASHBOARD                    |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print("|" + " " * 20 + Fore.BLUE + "EXITING USER DASHBOARD" + " " * 18 + "|")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                 main()  
 
             else:
-                print(" ______________________________________________________________")
-                print("|                                                              |")
-                print("|                 PLEASE ENTER A VALID CHOICE                  |")
-                print("|                                                              |")
-                print(" --------------------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 60)
+                print("|" + " " * 60 + "|")
+                print("|" + " " * 16 + Fore.BLUE + "PLEASE ENTER A VALID CHOICE" + " " * 17 + "|")
+                print("|" + " " * 60 + "|")
+                print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
 
     elif mainChoice == 2:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|             WELCOME TO THE ADMIN DASHBOARD                   |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 15 + Fore.BLUE + "WELCOME TO THE ADMIN DASHBOARD" + " " * 15 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         clear_screen()
 
         while True:
-                print(" __________________________________________________")
-                print("|                                                  |")
-                print("|               1. REGISTER ADMIN                  |")
-                print("|                                                  |")
-                print("|               2. ADMIN LOGIN                     |")
-                print("|                                                  |")
-                print("|               3. EXIT                            |")
-                print("|                                                  |")
-                print("|             PLEASE CHOOSE YOUR OPTION            |")
-                print(" --------------------------------------------------")
+                print(Fore.BLUE + " " + "_" * 50)
+                print("|" + " " *50 + "|")
+                print("|" + " " * 15 + Fore.BLUE + "1. REGISTER ADMIN" + " " * 18 + "|")
+                print("|" + " " * 50 + "|")
+                print("|" + " " * 15 + Fore.BLUE + "2. ADMIN LOGIN" + " " * 21 + "|")
+                print("|" + " " * 50 + "|")
+                print("|" + " " * 15 + Fore.BLUE + "3. EXIT" + " " * 28 + "|")
+                print("|" + " " * 50 + "|")
+                print("|" + " " * 15 + Fore.BLUE + "PLEASE CHOOSE YOUR OPTION" + " " * 10 + "|")
+                print(Fore.BLUE + " " + "-" * 50 + Style.RESET_ALL)
                 choice = int(input("Enter: "))
                 clear_screen()
                 if choice == 1:
@@ -1119,25 +1127,28 @@ def main():
                     adminLogin()
                     
                 elif choice == 3:
-                    print(" ______________________________________________________________")
-                    print("|                                                              |")
-                    print("|                    EXITING ADMIN DASHBOARD                   |")
-                    print("|                                                              |")
-                    print(" --------------------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 60)
+                    print("|" + " " * 60 + "|")
+                    print("|" + " " * 15 + Fore.BLUE + "EXITING ADMIN DASHBOARD" + " " * 22 + "|")
+                    print("|" + " " * 60 + "|")
+                    print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
                     main() 
                 else:
-                    print(" ______________________________________________________________")
-                    print("|                                                              |")
-                    print("|                 PLEASE ENTER A VALID CHOICE                  |")
-                    print("|                                                              |")
-                    print(" --------------------------------------------------------------")
+                    print(Fore.BLUE + " " + "_" * 60)
+                    print("|" + " " * 60 + "|")
+                    print("|" + " " * 15 + Fore.BLUE + "PLEASE ENTER A VALID CHOICE" + " " * 18 + "|")
+                    print("|" + " " * 60 + "|")
+                    print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
     elif mainChoice == 3:
-        print(" ______________________________________________________________")
-        print("|                                                              |")
-        print("|                      EXITING DASHBOARD                       |")
-        print("|                                                              |")
-        print(" --------------------------------------------------------------")
+        print(Fore.BLUE + " " + "_" * 60)
+        print("|" + " " * 60 + "|")
+        print("|" + " " * 18 + Fore.BLUE + "EXITING DASHBOARD" + " " * 25 + "|")
+        print("|" + " " * 60 + "|")
+        print(Fore.BLUE + " " + "-" * 60 + Style.RESET_ALL)
         sleep(2)
         sys.exit()
+
+        
 if __name__ == "__main__":
     main()
+    init()
