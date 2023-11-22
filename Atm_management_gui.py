@@ -20,7 +20,7 @@ from colorama import init, Fore, Style
 
 
 # Connect to MongoDB Atlas. please replace this with your own
-client = pymongo.MongoClient("mongodb+srv://atulkumar86281:atul@cluster0.du9k7ti.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("Your connection string")
 # Database name
 
 db = client["Atm_management"]
@@ -76,8 +76,8 @@ def get_user_input_with_timeout(prompt, timeout):
 #Function for Sending emails
 
 def send_email(subject, message, to_email):
-    from_email = "atul81595@gmail.com"
-    app_password = "sxan eugl jwqp dztx"  # generate from app password option in two step verification
+    from_email = "your gmail"
+    app_password = "sxan abdg jwqp dztx"  # generate from app password option in two step verification
 
     msg = MIMEMultipart()
     msg['From'] = from_email 
